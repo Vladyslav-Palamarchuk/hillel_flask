@@ -36,12 +36,18 @@
 
     <!-- List of students in a table -->
     <h4 class="mt-4">List of students:</h4>
+    <form id="searchForm" class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Введіть ім'я студента">
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Photo</th>
                 <th>Student Id</th>
                 <th>Name</th>
                 <th>Birth Date</th>
+                <th>Course Name</th>
                 <th>Actions</th>
             </tr>
         </thead>

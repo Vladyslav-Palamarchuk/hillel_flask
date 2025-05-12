@@ -8,10 +8,10 @@ from models.sqlalchemy.student import Student
 students_bp = Blueprint("students_bp", __name__, url_prefix="/students")
 
 
-@students_bp.route("/", methods=["GET"])
-def get_all_students():
-    students = Student.query.all()
-    return jsonify({"students": [StudentReadModel.model_validate(s).model_dump(mode="json") for s in students]})
+# # @students_bp.route("/", methods=["GET"])
+# def get_all_students():
+#     students = Student.query.all()
+#     return jsonify({"students": [StudentReadModel.model_validate(s).model_dump(mode="json") for s in students]})
 
 @students_bp.route("/<int:pk>", methods=["GET"])
 def get_student_by_id(pk):
@@ -70,3 +70,13 @@ def create_student_by_id():
 
 
     return jsonify(StudentReadModel.model_validate(new_student).model_dump(mode="json")), 201
+
+
+@students_bp.route("/", methods=["GET"], endpoint="get_students_list")
+def get_all_students():
+    name_filter = request.args.get("name")
+    query = Student.query.all()
+    if name_filter:
+        query = query.filter(Student.name.ilike(f"%{name_filter}%"))
+
+    return jsonify({"students": [StudentReadModel.model_validate(s).model_dump() for s in query]})

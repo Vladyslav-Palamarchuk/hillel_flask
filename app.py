@@ -15,6 +15,7 @@ os.environ.setdefault(config_variable_name, default_config_path)
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = settings.DB_URL
+    print(settings.DB_URL)
     app.register_blueprint(bp)
     app.register_blueprint(students_bp)
     init_app(app)
